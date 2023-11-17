@@ -45,3 +45,8 @@ def json_dumps(data: dict):
 
     with open('scraper_module/most_active_stocks.json', 'w') as file:
         file.write(json_data)
+
+
+if __name__ == "__main__":
+    active_stocks = scrape_listed_stocks_data('https://finance.yahoo.com/most-active/')
+    print(active_stocks)
