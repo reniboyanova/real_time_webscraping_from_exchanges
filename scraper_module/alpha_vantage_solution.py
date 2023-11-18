@@ -76,7 +76,7 @@ KEYWORDS = "The Gap"    # Replace with your search keywords
 
 
 url2 = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey={api_key}'
-r = requests.get(url)
+r = requests.get(url2)
 data2 = r.json()
 
 print(data2)
