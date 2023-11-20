@@ -1,7 +1,7 @@
 from itertools import combinations
 
 from fetch_data import FetchData
-from helprers import convert_currency, prompt_user_to_paste_ticker
+from helprers import convert_currency, prompt_user_to_paste_ticker, calculate_arbitrage
 
 fd = FetchData(prompt_user_to_paste_ticker())
 
@@ -93,19 +93,24 @@ class ProcessData:
                     currency_2 = self.__collected_data[ticker2]['currency']
                     date = time.split(' ')[0]
 
-                    converted_price1 = convert_currency(from_currency=currency_2, to_currency=currency_1, amount=price2,
-                                                        date_str=date)
-                    converted_price2 = convert_currency(from_currency=currency_1, to_currency=currency_2, amount=price1,
-                                                        date_str=date)
+                    # converted_price1 = convert_currency(from_currency=currency_2, to_currency=currency_1, amount=price2,
+                    #                                     date_str=date)
+                    # converted_price2 = convert_currency(from_currency=currency_1, to_currency=currency_2, amount=price1,
+                    #                                     date_str=date)
 
+                    arbitrage_1 = calculate_arbitrage(price1,currency_1,price2, currency_2, date)
+                    arbitrage_2 = calculate_arbitrage(price2,currency_2,price1, currency_1, date)
+
+                    price_diff_1 = str(arbitrage_1) + f' {currency_2}'
+                    price_diff_2 = str(arbitrage_2) + f' {currency_1}'
                     # Just to be easier, I made it str to add currency
-                    price_diff_1 = str(converted_price1 - price1) + f' {currency_1}'
-                    price_diff_2 = str(converted_price2 - price2) + f' {currency_2}'
+                    # price_diff_1 = str(converted_price1 - price1) + f' {currency_1}'
+                    # price_diff_2 = str(converted_price2 - price2) + f' {currency_2}'
 
-                    self.__collected_data[ticker1].setdefault(f'difference_in_{currency_1}_{ticker2}', {})[
+                    self.__collected_data[ticker1].setdefault(f'difference_in_{currency_2}_{ticker2}', {})[
                         time] = price_diff_1
 
-                    self.__collected_data[ticker2].setdefault(f'difference_in_{currency_2}_{ticker1}', {})[
+                    self.__collected_data[ticker2].setdefault(f'difference_in_{currency_1}_{ticker1}', {})[
                         time] = price_diff_2
 
     def __clean_data(self):

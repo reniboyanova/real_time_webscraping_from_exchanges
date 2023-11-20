@@ -4,6 +4,20 @@ import pytz
 from forex_python.converter import CurrencyRates
 
 
+def get_conversion_rate_on_date(base_currency, target_currency, date):
+    c = CurrencyRates()
+    date_obj = datetime.strptime(date, '%Y-%m-%d')
+    rate = c.get_rate(base_currency, target_currency, date_obj)
+    return rate
+
+def calculate_arbitrage(price1, currency1, price2, currency2, date):
+    conversion_rate = get_conversion_rate_on_date(currency2, currency1, date)
+
+    converted_price2 = price2 * conversion_rate
+
+    arbitrage_opportunity = converted_price2 - price1
+    return arbitrage_opportunity
+
 def get_api_key(filepath):
     """
     Helping function to open safety file with API key
