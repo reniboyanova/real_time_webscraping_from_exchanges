@@ -1,10 +1,10 @@
 class Defines:
     def __init__(self):
-        self.__api_key_file = 'api_token.txt'
+        self.__api_key_file = '../scraper_module/alpha_api2.txt'
         self.gs_ls_most_act = {'gainers': 'top_gainers', 'losers': 'top_losers', 'most-actives': 'most_actively_traded'}
         self.__gs_ls_most_act_url = 'https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey='
         self.__best_matches_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='
-
+        self.__time_daily_info_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='
     @property
     def api_key_file(self):
         return self.__api_key_file

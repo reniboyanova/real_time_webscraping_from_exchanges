@@ -7,7 +7,7 @@ def get_api_key(filepath):
     with open(filepath, 'r') as file:
         return file.read().strip()
 
-api_key = get_api_key('alpha_api.txt')
+api_key = get_api_key('../scraper_module/alpha_api.txt')
 ts = TimeSeries(key=api_key, output_format='pandas')
 
 # first step:

@@ -196,7 +196,7 @@ last_dict = {
                                              '2023-11-17 15:30:00': '-0.4074921204617965 EUR',
                                              '2023-11-17 16:00:00': '-0.09916348515469053 EUR'}}}
 
-with open('stock_data.json', 'w') as file:
+with open('../scraper_module/stock_data.json', 'w') as file:
     json.dump(last_dict, file, indent=4)
 # my 2 func for convert time:
 
