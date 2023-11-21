@@ -50,9 +50,5 @@ class NewTickersCollector:
 
     def process_new_ticker(self):
         self.__find_best_matches(prompt_user_to_paste_ticker())
+        self.__only_more_than_one_match()
 
-
-if __name__ == "__main__":
-    new_t = NewTickersCollector()
-    new_t.process_new_ticker()
-    print(new_t.new_ticker)

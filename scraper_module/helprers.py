@@ -1,22 +1,7 @@
 import json
 from datetime import datetime
 import pytz
-from forex_python.converter import CurrencyRates
 
-
-def get_conversion_rate_on_date(base_currency, target_currency, date):
-    c = CurrencyRates()
-    date_obj = datetime.strptime(date, '%Y-%m-%d')
-    rate = c.get_rate(base_currency, target_currency, date_obj)
-    return rate
-
-def calculate_arbitrage(price1, currency1, price2, currency2, date):
-    conversion_rate = get_conversion_rate_on_date(currency2, currency1, date)
-
-    converted_price2 = price2 * conversion_rate
-
-    arbitrage_opportunity = converted_price2 - price1
-    return arbitrage_opportunity
 
 def get_api_key(filepath):
     """
@@ -65,42 +50,29 @@ def convert_to_utc_time(time_str, date_str, current_tz_str):
         raise ValueError(f"Error in parsing date or time: {e}")
 
 
-def convert_currency(from_currency, to_currency, amount, date_str):
-    c = CurrencyRates()
-    date_obj = datetime.strptime(date_str, '%Y-%m-%d')
-    print(date_obj)
-    rate = c.get_rate(from_currency, to_currency, date_obj)
-
-    converted_amount = rate * amount
-    print(f"convert from {from_currency} to {to_currency} - {amount} = {converted_amount}")
-    return converted_amount
-
-
 def record_in_json_file(file_name, data):
     with open(file_name, 'w') as file:
         json.dump(data, file, indent=4)
 
 
 def prompt_user_to_paste_ticker():
-    user_input = input("Insert ticker symbol or company name: ")
-    return user_input
+    while True:
+        user_input = input("Insert ticker symbol or company name: ")
+        if 1 <= len(user_input) <= 20:
+            # Maybe using some library with all company names and tickers?
+            return user_input
+        print("Invalid ticker symbol, please try again")
 
 
 def prompt_user_to_paste_period_interval():
-    user_period = input(
-        "Insert period and period (example for valid periods 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max) : ")
-    user_interval = input(
-        "Insert period and interval (example for valid periods 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo) : ")
-    return user_period, user_interval
+    valid_period = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
+    valid_interval = ['1m','2m','5m','15m','30m','60m','90m','1h','1d','5d','1wk','1mo','3mo']
+    while True:
+        user_period = input(
+            "Insert period and period (example for valid periods 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max) : ")
+        user_interval = input(
+            "Insert period and interval (example for valid periods 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo) : ")
 
-
-
-if __name__ == "__main__":
-    amound = 100
-    currency1 = 'USD'
-    currency2 = 'CAD'
-    date_ = '2023-11-17'
-    amound2 = 85
-
-    print(convert_currency(currency1, currency2, amound, date_))
-    print(convert_currency(currency2, currency1, amound2, date_))
+        if user_period in valid_period and user_interval in valid_interval:
+            return user_period, user_interval
+        print("Invalid period and interval, please try again!")
