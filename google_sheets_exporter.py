@@ -1,6 +1,6 @@
 import pygsheets
 
-from scraper_module.data_exporter import DataExporter
+from data_exporter import DataExporter
 
 
 class GoogleSheetsExporter(DataExporter):

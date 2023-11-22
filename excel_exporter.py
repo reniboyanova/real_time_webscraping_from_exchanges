@@ -1,6 +1,6 @@
 import pandas as pd
 
-from scraper_module.data_exporter import DataExporter
+from data_exporter import DataExporter
 
 
 class ExcelExporter(DataExporter):

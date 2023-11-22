@@ -1,20 +1,19 @@
 from helprers import get_api_key, prompt_user_to_paste_ticker
-from different_approacher import defines_
+
 
 import requests
 from requests import RequestException
-
-de = defines_.Defines()
 
 
 class NewTickersCollector:
     def __init__(self):
         self.__api_key_file = 'alpha_api.txt'
+        self.__best_matches_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='
         self.__api_key = get_api_key(self.__api_key_file)
         self.__new_ticker = {}
 
     def __find_best_matches(self, company_or_ticker_search):
-        url = f'{de.best_matches_url}{self.__api_key}'
+        url = f'{self.__best_matches_url}{self.__api_key}'
 
         params = {
             "function": "SYMBOL_SEARCH",

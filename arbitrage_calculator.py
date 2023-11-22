@@ -1,10 +1,9 @@
 from datetime import datetime
 from itertools import combinations
 
-from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates, RatesNotAvailableError
 
-
-# from scraper_module.helprers import calculate_arbitrage
+from conversion_rate_calculator import ConversionRateCalculator
 
 
 class ArbitrageCalculator:
@@ -15,8 +14,9 @@ class ArbitrageCalculator:
     """
 
     def __init__(self, collected_data, list_with_tickers):
-        self.collected_data = collected_data
-        self.list_with_tickers = list_with_tickers
+        self.__collected_data = collected_data
+        self.__list_with_tickers = list_with_tickers
+        self.__rate_calculator = ConversionRateCalculator()
 
     def add_arbitrage_opportunities(self):
         """
@@ -28,21 +28,23 @@ class ArbitrageCalculator:
 
         :return:
         """
-        ticker_pairs = list(combinations(self.list_with_tickers, 2))
+        ticker_pairs = list(combinations(self.__list_with_tickers, 2))
 
-        for pair in ticker_pairs:
-            ticker1, ticker2 = pair
-            for time in self.collected_data[ticker1]['daily_info']:
-                if time in self.collected_data[ticker2]['daily_info']:
-                    currency_1 = self.collected_data[ticker1]['currency']
-                    currency_2 = self.collected_data[ticker2]['currency']
+        for ticker1, ticker2 in ticker_pairs:
+            if ticker1 not in self.__collected_data or ticker2 not in self.__collected_data:
+                continue
+
+            for time in self.__collected_data[ticker1]['daily_info']:
+                if time in self.__collected_data[ticker2]['daily_info']:
+                    currency_1 = self.__collected_data[ticker1]['currency']
+                    currency_2 = self.__collected_data[ticker2]['currency']
 
                     price_diff_1, price_diff_2 = self.__calculate_arbitrage_opportunities(time, ticker1, ticker2)
 
-                    self.collected_data[ticker1].setdefault(f'difference_in_{currency_2}_{ticker2}', {})[
+                    self.__collected_data[ticker1].setdefault(f'difference_in_{currency_2}_{ticker2}', {})[
                         time] = price_diff_1
 
-                    self.collected_data[ticker2].setdefault(f'difference_in_{currency_1}_{ticker1}', {})[
+                    self.__collected_data[ticker2].setdefault(f'difference_in_{currency_1}_{ticker1}', {})[
                         time] = price_diff_2
 
     def __calculate_arbitrage_opportunities(self, time, ticker1, ticker2):
@@ -54,10 +56,10 @@ class ArbitrageCalculator:
         :param ticker2: ticker symbol, for example, 'TL0.DE'
         :return:
         """
-        price1 = self.collected_data[ticker1]['daily_info'][time]
-        price2 = self.collected_data[ticker2]['daily_info'][time]
-        currency_1 = self.collected_data[ticker1]['currency']
-        currency_2 = self.collected_data[ticker2]['currency']
+        price1 = self.__collected_data[ticker1]['daily_info'][time]
+        price2 = self.__collected_data[ticker2]['daily_info'][time]
+        currency_1 = self.__collected_data[ticker1]['currency']
+        currency_2 = self.__collected_data[ticker2]['currency']
         date = time.split(' ')[0]
 
         arbitrage_1 = self.__calculate_arbitrage(price1, currency_1, price2, currency_2, date)
@@ -67,21 +69,6 @@ class ArbitrageCalculator:
         price_diff_2 = str(arbitrage_2) + f' {currency_1}'
 
         return price_diff_1, price_diff_2
-
-    @staticmethod
-    def __get_conversion_rate_on_date(base_currency, target_currency, date):
-        """
-        Calculate the concrete date currency rate, by using forex_python module and class CurrencyRates from it.
-        Function also uses datetime.datetime (C module), to format date, and makes it date object from string
-        :param base_currency: currency symbol in string 'USD'
-        :param target_currency: currency symbol in string 'CAD'
-        :param date: date in string format - '2023-11-21'
-        :return: currency rate between base and target currency (float)
-        """
-        c = CurrencyRates()
-        date_obj = datetime.strptime(date, '%Y-%m-%d')
-        rate = c.get_rate(base_currency, target_currency, date_obj)
-        return rate
 
     def __calculate_arbitrage(self, price1, currency1, price2, currency2, date):
         """
@@ -93,7 +80,7 @@ class ArbitrageCalculator:
         :param date: date in string format - '2023-11-21'
         :return: calculated opportunity (floating point number)
         """
-        conversion_rate = self.__get_conversion_rate_on_date(currency2, currency1, date)
+        conversion_rate = self.__rate_calculator.get_conversion_rate_on_date(currency2, currency1, date)
 
         converted_price2 = price2 * conversion_rate
 

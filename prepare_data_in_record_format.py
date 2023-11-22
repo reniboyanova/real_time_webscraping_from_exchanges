@@ -1,5 +1,4 @@
-from helprers import record_in_json_file
-from scraper_module.process_data import ProcessData
+from process_data import ProcessData
 
 prd = ProcessData()
 

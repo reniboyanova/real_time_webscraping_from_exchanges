@@ -1,6 +1,6 @@
 from prepare_data_in_record_format import PrepareDataInRecordFormat
 from google_sheets_exporter import GoogleSheetsExporter
-from scraper_module.excel_exporter import ExcelExporter
+from excel_exporter import ExcelExporter
 
 
 class ScrapeInfoOperator:
@@ -53,8 +53,4 @@ class ScrapeInfoOperator:
         except Exception as e:
             print(f"Exception was occur {e}")
 
-
-if __name__ == "__main__":
-    scrape = ScrapeInfoOperator()
-    scrape.main()
 

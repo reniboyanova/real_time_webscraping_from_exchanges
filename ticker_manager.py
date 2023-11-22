@@ -1,4 +1,4 @@
-from scraper_module.ticker_storage import TickerStorage
+from ticker_storage import TickerStorage
 
 
 class TickerManager:

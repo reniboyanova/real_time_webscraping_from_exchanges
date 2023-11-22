@@ -29,6 +29,9 @@ class DataExporter(ABC):
         if not isinstance(info, dict):
             raise TypeError("Info needs to be a dictionary instance!")
 
+        if not info:
+            return pd.DataFrame()
+
         max_length = max([len(values) if isinstance(values, list) else 1 for values in info.values()])
         df_data = {col: [] for col in info.keys()}
 
