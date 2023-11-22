@@ -3,7 +3,7 @@ from itertools import combinations
 
 from forex_python.converter import RatesNotAvailableError
 
-from conversion_rate_calculator import ConversionRateCalculator
+from src.conversion_rate_calculator import ConversionRateCalculator
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode='a',
                     format='%(asctime)s - %(levelname)s - %(message)s')

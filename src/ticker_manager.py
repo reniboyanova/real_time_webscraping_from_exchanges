@@ -1,4 +1,4 @@
-from ticker_storage import TickerStorage
+from src.ticker_storage import TickerStorage
 
 
 class TickerManager:

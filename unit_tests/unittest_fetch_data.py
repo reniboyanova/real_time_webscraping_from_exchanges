@@ -1,9 +1,8 @@
 import json
 import unittest
-from fetch_data import FetchData
-from ticker_data_processor import TickerDataProcessor
-from ticker_fetcher import TickerFetcher
-from ticker_library_manager import TickerLibraryManager
+from src.fetch_data import FetchData
+from src.ticker_data_processor import TickerDataProcessor
+from src.ticker_fetcher import TickerFetcher
 
 
 class TestFetchData(unittest.TestCase):

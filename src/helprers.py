@@ -68,7 +68,7 @@ def prompt_user_to_paste_ticker():
 
 def prompt_user_to_paste_period_interval():
     try:
-        with open('period_interval_mapping.json', 'r') as file:
+        with open('src/period_interval_mapping.json', 'r') as file:
             valid_period_intervals = json.load(file)
 
         while True:

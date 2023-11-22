@@ -1,8 +1,8 @@
-from fetch_data import FetchData
-from data_cleaner import DataCleaner
-from filer_data import DataFilter
-from arbitrage_calculator import ArbitrageCalculator
-from helprers import prompt_user_to_paste_ticker
+from src.fetch_data import FetchData
+from src.data_cleaner import DataCleaner
+from src.filer_data import DataFilter
+from src.arbitrage_calculator import ArbitrageCalculator
+from src.helprers import prompt_user_to_paste_ticker
 
 fd = FetchData(prompt_user_to_paste_ticker())
 

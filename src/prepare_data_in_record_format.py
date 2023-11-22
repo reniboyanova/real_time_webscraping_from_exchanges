@@ -1,4 +1,4 @@
-from process_data import ProcessData
+from src.process_data import ProcessData
 
 prd = ProcessData()
 

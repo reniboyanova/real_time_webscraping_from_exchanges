@@ -7,7 +7,7 @@ from requests import RequestException
 
 class NewTickersCollector:
     def __init__(self):
-        self.__api_key_file = 'alpha_api.txt'
+        self.__api_key_file = '../alpha_api.txt'
         self.__best_matches_url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='
         self.__api_key = get_api_key(self.__api_key_file)
         self.__new_ticker = {}

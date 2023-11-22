@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime
-from conversion_rate_calculator import ConversionRateCalculator
+from src.conversion_rate_calculator import ConversionRateCalculator
 from forex_python.converter import RatesNotAvailableError
 
 

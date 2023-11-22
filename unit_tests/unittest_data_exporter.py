@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from data_exporter import DataExporter
+from src.data_exporter import DataExporter
 
 class TestDataExporter(unittest.TestCase):
 

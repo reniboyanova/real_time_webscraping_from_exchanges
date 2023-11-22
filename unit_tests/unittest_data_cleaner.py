@@ -1,5 +1,5 @@
 import unittest
-from data_cleaner import DataCleaner
+from src.data_cleaner import DataCleaner
 
 class TestDataCleaner(unittest.TestCase):
 

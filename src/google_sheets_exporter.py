@@ -1,6 +1,6 @@
 import pygsheets
 
-from data_exporter import DataExporter
+from src.data_exporter import DataExporter
 
 
 class GoogleSheetsExporter(DataExporter):
@@ -12,7 +12,7 @@ class GoogleSheetsExporter(DataExporter):
     def __init__(self, data, spreadsheet_name):
         super().__init__(data)
         self.spreadsheet_name = spreadsheet_name
-        self.google_client = pygsheets.authorize(service_file="credentials.json")
+        self.google_client = pygsheets.authorize(service_file="src/credentials.json")
         self.spreadsheet = self.google_client.open(self.spreadsheet_name)
 
     def export_data(self):

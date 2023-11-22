@@ -1,4 +1,4 @@
-from scrape_info_operator import ScrapeInfoOperator
+from src.scrape_info_operator import ScrapeInfoOperator
 import logging
 
 logging.basicConfig(level=logging.INFO, filename="loging_info.log", filemode='a',

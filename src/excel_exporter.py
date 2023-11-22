@@ -2,7 +2,7 @@ import logging
 
 import pandas as pd
 
-from data_exporter import DataExporter
+from src.data_exporter import DataExporter
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode='a',
                     format='%(asctime)s - %(levelname)s - %(message)s')

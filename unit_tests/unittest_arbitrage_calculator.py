@@ -1,7 +1,7 @@
 from unittest import TestCase
 import json
 
-from arbitrage_calculator import ArbitrageCalculator
+from src.arbitrage_calculator import ArbitrageCalculator
 from itertools import combinations
 
 

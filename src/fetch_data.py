@@ -1,8 +1,8 @@
 
-from ticker_data_processor import TickerDataProcessor
-from ticker_fetcher import TickerFetcher
-from ticker_library_manager import TickerLibraryManager
-from helprers import prompt_user_to_paste_period_interval
+from src.ticker_data_processor import TickerDataProcessor
+from src.ticker_fetcher import TickerFetcher
+from src.ticker_library_manager import TickerLibraryManager
+from src.helprers import prompt_user_to_paste_period_interval
 
 
 class FetchData:

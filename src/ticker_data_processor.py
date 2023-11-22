@@ -1,4 +1,4 @@
-from helprers import  convert_to_utc_time
+from src.helprers import  convert_to_utc_time
 
 class TickerDataProcessor:
     @staticmethod

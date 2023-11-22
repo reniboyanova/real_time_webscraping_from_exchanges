@@ -1,5 +1,5 @@
-from fetch_data import FetchData
-from helprers import prompt_user_to_paste_ticker
+from src.fetch_data import FetchData
+from src.helprers import prompt_user_to_paste_ticker
 
 fd = FetchData(prompt_user_to_paste_ticker())
 class StoreDataBeforeProcessing:

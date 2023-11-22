@@ -1,6 +1,6 @@
-from prepare_data_in_record_format import PrepareDataInRecordFormat
-from google_sheets_exporter import GoogleSheetsExporter
-from excel_exporter import ExcelExporter
+from src.prepare_data_in_record_format import PrepareDataInRecordFormat
+from src.google_sheets_exporter import GoogleSheetsExporter
+from src.excel_exporter import ExcelExporter
 
 
 class ScrapeInfoOperator:
@@ -18,7 +18,7 @@ class ScrapeInfoOperator:
         self.__data = self.__data_holder.final_data
         self.__sheet_name = 'Real Time Stock'
         self.__google_exporter = GoogleSheetsExporter(self.__data, self.__sheet_name)
-        self.__excel_file_name = 'tickers_stock_data.xlsx'
+        self.__excel_file_name = 'src/tickers_stock_data.xlsx'
         self.__excel_exporter = ExcelExporter(self.__data, self.__excel_file_name)
 
     def export_to_excel(self):

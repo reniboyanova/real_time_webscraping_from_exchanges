@@ -9,7 +9,7 @@ class TickerStorage:
     """
 
     def __init__(self):
-        with open("companies_info.json", "r") as file:
+        with open("src/companies_info.json", "r") as file:
             self.__collection_stock_tickers = json.load(file)
 
     @property

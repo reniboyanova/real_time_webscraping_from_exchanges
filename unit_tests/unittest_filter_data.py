@@ -1,5 +1,5 @@
 from unittest import TestCase
-from filer_data import DataFilter
+from src.filer_data import DataFilter
 
 
 class TestDataFilter(TestCase):
