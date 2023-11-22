@@ -1,7 +1,9 @@
 import json
+import logging
 from datetime import datetime
 import pytz
-
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode='a',
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 def get_api_key(filepath):
     """
@@ -65,14 +67,18 @@ def prompt_user_to_paste_ticker():
 
 
 def prompt_user_to_paste_period_interval():
-    valid_period = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
-    valid_interval = ['1m','2m','5m','15m','30m','60m','90m','1h','1d','5d','1wk','1mo','3mo']
-    while True:
-        user_period = input(
-            "Insert period and period (example for valid periods 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max) : ")
-        user_interval = input(
-            "Insert period and interval (example for valid periods 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo) : ")
+    try:
+        with open('period_interval_mapping.json', 'r') as file:
+            valid_period_intervals = json.load(file)
 
-        if user_period in valid_period and user_interval in valid_interval:
-            return user_period, user_interval
-        print("Invalid period and interval, please try again!")
+        while True:
+            user_period = input("Insert period (valid periods 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max): ")
+            user_interval = input("Insert interval (valid intervals based on your period): ")
+
+            if user_period in valid_period_intervals and user_interval in valid_period_intervals[user_period]:
+                return user_period, user_interval
+            print("Invalid period and interval combination, please try again!")
+    except FileNotFoundError as e:
+        logging.error(f"File was not found {e}")
+        print("Error: The required configuration file is missing. Please check your setup.")
+

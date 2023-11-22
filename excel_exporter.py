@@ -1,8 +1,11 @@
+import logging
+
 import pandas as pd
 
 from data_exporter import DataExporter
 
-
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode='a',
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 class ExcelExporter(DataExporter):
     """
     ExcelExporter derive DataExporter and extends its method export_data.
@@ -18,8 +21,13 @@ class ExcelExporter(DataExporter):
         Overrides base class method with logic for Excel exporting
         :return:
         """
-        with pd.ExcelWriter(self.file_name) as writer:
-            for info in self.data:
-                df = DataExporter.create_dataframe(info)
-                df.to_excel(writer, sheet_name=info['Company Ticker'], index=False)
+        try:
+            with pd.ExcelWriter(self.file_name) as writer:
+                for info in self.data:
+                    df = DataExporter.create_dataframe(info)
+                    df.to_excel(writer, sheet_name=info['Company Ticker'], index=False)
+
+        except (ValueError, PermissionError, FileNotFoundError) as e:
+            logging.error(f"Error exporting to Excel: {e}")
+            print(f"Error exporting to Excel: {e}")
 
